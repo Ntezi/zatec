@@ -1,0 +1,35 @@
+{
+  "name": "zatec-test",
+  "version": "1.0.0",
+  "description": "Zatec Software Engineer Test",
+  "main": "index.js",
+  "author": "Marius Ngaboyamahina",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start-server": "node ./src/server/app.js"
+  },
+  "dependencies": {
+    "axios": "^0.26.1",
+    "body-parser": "^1.20.0",
+    "cls-hooked": "^4.2.2",
+    "config": "^3.3.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-http-proxy": "^1.6.3",
+    "express-openapi-validator": "^4.13.7",
+    "express-rate-limit": "^6.3.0",
+    "flat": "^5.0.2",
+    "helmet": "^5.0.2",
+    "http-shutdown": "^1.2.2",
+    "http-status-codes": "^2.2.0",
+    "js-yaml": "^4.1.0",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.2",
+    "redis": "^4.0.6",
+    "swagger-ui-dist": "^4.10.3",
+    "uuid": "^8.3.2",
+    "winston": "^3.7.2"
+  }
+}

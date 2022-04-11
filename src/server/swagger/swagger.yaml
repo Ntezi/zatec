@@ -1,0 +1,89 @@
+openapi: 3.0.1
+info:
+  title: An OpenAPI compliant API
+  description: 'This is An OpenAPI compliant API'
+  contact:
+    name: Marius Ngaboyamahina
+    email: ngabomarius@gmail.com
+  version: 1.0.0
+servers:
+  - url: http://localhost:2201
+tags:
+  - name: "Chuck"
+    description: "Joke categories"
+    externalDocs:
+      description: "Find out more"
+      url: "https://api.chucknorris.io/jokes/categories"
+  - name: "Swapi"
+    description: "Star Wars people"
+    externalDocs:
+      description: "Find out more"
+      url: "https://swapi.dev/api/people"
+  - name: "Search"
+    description: "Search API"
+    externalDocs:
+      description: "Find out more"
+      url: "https://swapi.dev/api/people/?search"
+paths:
+  /chuck/categories:
+    get:
+      security:
+        - ApiKeyAuth: [ ]
+      tags:
+        - Chuck
+      summary: Get all the joke categories
+      description: All the joke categories
+      operationId: getChuckCategories
+      responses:
+        200:
+          description: Success Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+              example:
+                status_code: 200
+                message: "OK"
+                data:
+                  - "animal"
+                request_id: "d61f9703-6332-468b-84ea-5389c720ff8b"
+
+        401:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                status_code: 401
+                message: "Error in GET /services/categories"
+                error: "Unauthorized"
+                request_id: "d61f9703-6332-468b-84ea-5389c720ff8b"
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+  schemas:
+    SuccessResponse:
+      type: object
+      properties:
+        status_code:
+          type: number
+        message:
+          type: string
+        data:
+          type: object
+    ErrorResponse:
+      type: object
+      properties:
+        status_code:
+          type: number
+        message:
+          type: string
+        error:
+          type: string
+        request_id:
+          type: string
