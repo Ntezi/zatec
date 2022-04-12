@@ -20,5 +20,5 @@ async function getJokeCategoriesAPI() {
 }
 
 module.exports = {
-    getJokesCategoriesAPI: getJokeCategoriesAPI
+    getJokeCategoriesAPI
 };

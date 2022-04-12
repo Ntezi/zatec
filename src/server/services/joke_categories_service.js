@@ -1,4 +1,4 @@
-const {getJokesCategoriesAPI} = require("../api/joke_categories_api");
+const {getJokeCategoriesAPI} = require("../api/joke_categories_api");
 const {getCachedJokeCategories} = require("../cache/joke_categories_cache");
 const {REDIS_KEY_CHUCK_JOKE_CATEGORIES} = require("../utils/constants");
 const { logger } = require('../utils/logging')(module);
@@ -12,7 +12,7 @@ async function getJokesCategories() {
         logger.info('Fetching from cache');
     } else {
         logger.info('Fetching from API');
-        jokesCategories = await getJokesCategoriesAPI();
+        jokesCategories = await getJokeCategoriesAPI();
     }
 
     return jokesCategories || null;

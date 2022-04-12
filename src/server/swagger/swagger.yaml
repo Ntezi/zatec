@@ -33,7 +33,7 @@ paths:
         - Chuck
       summary: Get all the joke categories
       description: All the joke categories
-      operationId: getChuckCategories
+      operationId: getChuckJokeCategories
       responses:
         200:
           description: Success Response
@@ -59,7 +59,40 @@ paths:
                 message: "Error in GET /services/categories"
                 error: "Unauthorized"
                 request_id: "d61f9703-6332-468b-84ea-5389c720ff8b"
+  /swapi/people:
+    get:
+      security:
+        - ApiKeyAuth: [ ]
+      tags:
+        - Swapi
+      summary: Get all the star wars people
+      description: All the star wars people
+      operationId: getSwapiPeople
+      responses:
+        200:
+          description: Success Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+              example:
+                status_code: 200
+                message: "OK"
+                data:
+                  - "animal"
+                request_id: "d61f9703-6332-468b-84ea-5389c720ff8b"
 
+        401:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                status_code: 401
+                message: "Error in GET /services/categories"
+                error: "Unauthorized"
+                request_id: "d61f9703-6332-468b-84ea-5389c720ff8b"
 components:
   securitySchemes:
     ApiKeyAuth:
