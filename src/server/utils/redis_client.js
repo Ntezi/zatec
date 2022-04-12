@@ -58,13 +58,28 @@ async function getCachedData(key, command) {
 
         logger.info(`Redis getting value for key ${key}`);
     } catch (error) {
-        logger.debug(`Redis getting value for key ${key} failed: ${error.message}`);
+        logger.debug(`Error in getting value for key ${key} failed: ${error.message}`);
         throw new Error(`Error in getting value: ${error}.`);
     }
 
     return cachedData;
 }
 
+async function keyExits(key) {
+    let exits = false;
+    try {
+        exits = await client.EXISTS(key);
+        if (exits){
+            logger.info(`The key "${key}" exits`);
+            return exits;
+        }
+    } catch (error) {
+        logger.debug(`Error checking the key ${key}: ${error.message}`);
+        throw new Error(`Error in getting value: ${error}.`);
+    }
+    return exits;
+}
+
 module.exports = {
-    init, cacheData, getCachedData
+    init, cacheData, getCachedData, keyExits
 };

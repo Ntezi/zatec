@@ -4,13 +4,13 @@ const {logger} = require('../utils/logging')(module);
 const {returnErrorResponse, returnResponse} = require('../utils/status');
 const {StatusCodes, ReasonPhrases} = require('http-status-codes');
 const authenticate = require('../middlewares/authorization');
-const {getSwapiPeople} = require('../services/swapi_people_service');
+const StarWarsPeopleService = require('../services/star_wars_people_service');
 
 router.get('/people', authenticate, async (req, res) => {
     try {
         logger.info(`Chuck Endpoint: GET /swapi/people`);
-        const swapiPeople = await getSwapiPeople();
-        returnResponse(res, {data: swapiPeople}, StatusCodes.OK, ReasonPhrases.OK)
+        const starWarsPeople = await StarWarsPeopleService.getStarWarsPeople();
+        returnResponse(res, {data: starWarsPeople}, StatusCodes.OK, ReasonPhrases.OK)
     } catch (error) {
         logger.error(`Error in GET /swapi/people: ${error.toString()}`);
         returnErrorResponse(res, error, StatusCodes.INTERNAL_SERVER_ERROR);
