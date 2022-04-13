@@ -93,6 +93,53 @@ paths:
                 message: "Error in GET /services/categories"
                 error: "Unauthorized"
                 request_id: "d61f9703-6332-468b-84ea-5389c720ff8b"
+  /search:
+    get:
+      security:
+        - ApiKeyAuth: [ ]
+      tags:
+        - Search
+      summary: Simultaneously search both the Chuck Norris and Star Wars.
+      description: Chuck Norris and Star Wars
+      operationId: searchChuckSwapi
+      parameters:
+        - name: search_category
+          in: query
+          description: Search Chuck Norris Jokes
+          required: true
+          schema:
+            type: string
+        - name: search_people
+          in: query
+          description: Search Star Wars People
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+              example:
+                status_code: 200
+                message: "OK"
+                data:
+                  - "animal"
+                request_id: "d61f9703-6332-468b-84ea-5389c720ff8b"
+
+        401:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                status_code: 401
+                message: "Error in GET /search"
+                error: "Unauthorized"
+                request_id: "d61f9703-6332-468b-84ea-5389c720ff8b"
 components:
   securitySchemes:
     ApiKeyAuth:

@@ -31,7 +31,6 @@ async function getCachedJokesData(searchQuery) {
     if (await RedisClient.keyExits(key)) {
         return await RedisClient.getCachedData(key, Constants.REDIS_COMMAND_GET);
     }
-    return {};
 }
 
 module.exports = {

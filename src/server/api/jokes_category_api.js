@@ -31,14 +31,12 @@ async function searchJokesByCategoryAPI(searchQuery) {
         if (jokes){
             const jokesData = JSON.stringify(jokes);
             await JokeCategoriesCache.cacheJokesData(jokesData, searchQuery);
-            return jokesData
+            return jokes
         }
     } catch (error) {
         logger.error(`Failed to get jokes categories: ${error.toString()}`);
         throw new Error(`Failed to get jokes categories: ${error.toString()}`);
     }
-
-    return {};
 }
 
 module.exports = {

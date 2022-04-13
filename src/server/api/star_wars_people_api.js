@@ -17,27 +17,23 @@ async function getStarWarsPeopleAPI() {
         logger.error(`Failed to get star wars people: ${error.toString()}`);
         throw new Error(`Failed to get star wars people: ${error.toString()}`);
     }
-
-    return {};
 }
 
 async function searchStarWarsPeopleAPI(searchQuery) {
     try {
         const searchStarWarsPeopleEndpointUrl = `${Constants.SW_PEOPLE_API}/?search=${searchQuery}`;
         const starWarsPeople = await callApi(searchStarWarsPeopleEndpointUrl);
-
+        
         // Caching the results
         if (starWarsPeople){
             const searchStarWarsPeopleData = JSON.stringify(starWarsPeople);
-            await  StarWarsPeopleCache.getCachedStarWarsPeopleSearch(searchStarWarsPeopleData, searchQuery);
-            return JSON.parse(searchStarWarsPeopleData)
+            await  StarWarsPeopleCache.cacheStarWarsPeopleSearch(searchStarWarsPeopleData, searchQuery);
+            return starWarsPeople
         }
     } catch (error) {
         logger.error(`Failed to get star wars people: ${error.toString()}`);
         throw new Error(`Failed to get star wars people: ${error.toString()}`);
     }
-
-    return {};
 }
 
 module.exports = {

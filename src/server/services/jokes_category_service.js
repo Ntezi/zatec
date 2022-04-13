@@ -1,38 +1,39 @@
-const { getResults } = require('./get_results_helper');
 const JokesCategoryAPI = require("../api/jokes_category_api");
 const JokesCategoryCache = require("../cache/jokes_category_cache");
 const { logger } = require('../utils/logging')(module);
 
 async function getJokeCategories() {
     const cachedJokeCategories = await JokesCategoryCache.getCachedJokeCategories();
-    const jokeCategoriesAPI = await JokesCategoryAPI.getJokeCategoriesAPI();
 
-    let jokesCategories;
+    let data;
     if (cachedJokeCategories.length > 0) {
-        jokesCategories = cachedJokeCategories;
+        data = cachedJokeCategories;
         logger.info('Fetching from cache');
     } else {
         logger.info('Fetching from API');
-        jokesCategories = jokeCategoriesAPI;
+        data = await JokesCategoryAPI.getJokeCategoriesAPI();
     }
 
-    return jokesCategories || [];
-
+    return data || [];
 }
 
-async function searchJokeCategory(searchQuery) {
+async function searchJokes(searchQuery) {
     if (searchQuery) {
         const cachedJokesData = await JokesCategoryCache.getCachedJokesData(searchQuery);
-        const searchJokesByCategoryAPI = await JokesCategoryAPI.searchJokesByCategoryAPI(searchQuery);
 
-        if (cachedJokesData || searchJokesByCategoryAPI) {
-            return getResults(cachedJokesData, searchJokesByCategoryAPI).result;
+        let data;
+        if (cachedJokesData) {
+            data = JSON.parse(cachedJokesData);
+            logger.info('Fetching from cache');
+        } else {
+            logger.info('Fetching from API');
+            data = await JokesCategoryAPI.searchJokesByCategoryAPI(searchQuery);
         }
-    }
 
-    return {};
+        return data.result;
+    }
 }
 
 module.exports = {
-    getJokeCategories, searchJokeCategory
+    getJokeCategories, searchJokes
 };

@@ -72,6 +72,8 @@ async function keyExits(key) {
         if (exits){
             logger.info(`The key "${key}" exits`);
             return exits;
+        } else {
+            logger.info(`The key "${key}" does not exist`);
         }
     } catch (error) {
         logger.debug(`Error checking the key ${key}: ${error.message}`);
