@@ -1,5 +1,5 @@
 const {createClient} = require('redis')
-const { logger } = require('../utils/logging')(module);
+const { logger } = require('./logging')(module);
 const {
     REDIS_COMMAND_RPUSH,
     REDIS_COMMAND_LRANGE,

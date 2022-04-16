@@ -21,6 +21,7 @@ async function cacheJokesData(jokesData, searchQuery) {
 async function getCachedJokeCategories() {
     if (await RedisClient.keyExits(getJokeCategoryKey())) {
         const cachedJokeCategories = await RedisClient.getCachedData(getJokeCategoryKey(), Constants.REDIS_COMMAND_LRANGE);
+        console.log("cachedJokeCategories", cachedJokeCategories);
         return  cachedJokeCategories.length > 0 ? cachedJokeCategories.join(' ').split(' ') : [];
     }
     return [];

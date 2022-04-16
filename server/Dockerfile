@@ -2,12 +2,12 @@ FROM node:lts-alpine
 
 WORKDIR /srv/app
 
-COPY package.json yarn.lock .env scripts/startup.sh ./
+COPY package.json scripts/startup.sh ./
 
 RUN chmod +x startup.sh
 
 RUN yarn
 
-COPY src/server ./src/server/
+COPY . .
 
 ENTRYPOINT ["./startup.sh"]
