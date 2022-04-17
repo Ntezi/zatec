@@ -1,17 +1,28 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import {useEffect, useMemo, useState} from "react";
 import {fetchPeople, selectAllPeople} from "./swPeopleSlice";
 import {Badge, Card, ListGroup} from "react-bootstrap";
+import Pagination from "../../components/Pagination";
+
+let PageSize = 10;
 
 const SwPeopleList = () => {
     const dispatch = useDispatch();
 
     const people = useSelector(selectAllPeople);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const currentPeopleData = useMemo(() => {
+        const firstPageIndex = (currentPage - 1) * PageSize;
+        const lastPageIndex = firstPageIndex + PageSize;
+        return people.slice(firstPageIndex, lastPageIndex);
+    }, [currentPage]);
+
     useEffect(() => {
         dispatch(fetchPeople());
     }, [dispatch])
 
-    const content = people.map((p, index) => {
+    const content = currentPeopleData.map((p, index) => {
         return <ListGroup.Item
             key={index}
             action
@@ -20,23 +31,34 @@ const SwPeopleList = () => {
         >
             <div className="ms-2 me-auto">
                 <div className="fw-bold">{p.name}</div>
-                <a href={p.url} target={"_blank"}>Read More</a>
+                {/*<a href={p.url} target={"_blank"}>Read More</a>*/}
             </div>
             <Badge bg="primary" pill>
-                Number of movies: {p.films.length}
+                Movies: {p.films.length}
             </Badge>
         </ListGroup.Item>
-    })
+    });
 
     return (
         <section>
             <Card>
-                <Card.Body>
+                <Card.Header>
                     <Card.Title>Star Wars People</Card.Title>
+                </Card.Header>
+                <Card.Body>
                     <Card.Text>
                         {content}
                     </Card.Text>
                 </Card.Body>
+                <Card.Footer>
+                    <Pagination
+                        className="pagination-bar"
+                        currentPage={currentPage}
+                        totalCount={people.length}
+                        pageSize={PageSize}
+                        onPageChange={page => setCurrentPage(page)}
+                    />
+                </Card.Footer>
             </Card>
         </section>
     )
