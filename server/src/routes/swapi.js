@@ -8,7 +8,7 @@ const StarWarsPeopleService = require('../services/star_wars_people_service');
 
 router.get('/people', authenticate, async (req, res) => {
     try {
-        logger.info(`Chuck Endpoint: GET /swapi/people`);
+        logger.info(`SWAPI Endpoint: GET /swapi/people`);
         const starWarsPeople = await StarWarsPeopleService.getStarWarsPeople();
         returnResponse(res, {data: starWarsPeople}, StatusCodes.OK, ReasonPhrases.OK)
     } catch (error) {

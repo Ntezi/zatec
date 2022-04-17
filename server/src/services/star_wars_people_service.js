@@ -13,7 +13,8 @@ async function getStarWarsPeople() {
         data = await StarWarsPeopleAPI.getStarWarsPeopleAPI();
     }
 
-    return data.results;
+    console.log('cachedStarWarsPeople', data);
+    return data;
 }
 
 async function searchStarWarsPeople(searchQuery) {
