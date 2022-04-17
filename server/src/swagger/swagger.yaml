@@ -23,7 +23,7 @@ tags:
     description: "Search API"
     externalDocs:
       description: "Find out more"
-      url: "https://swapi.dev/api/people/?search"
+      url: "https://swapi.dev/api/people/?jokes"
 paths:
   /chuck/categories:
     get:
@@ -99,20 +99,20 @@ paths:
         - ApiKeyAuth: [ ]
       tags:
         - Search
-      summary: Simultaneously search both the Chuck Norris and Star Wars.
+      summary: Simultaneously jokes both the Chuck Norris and Star Wars.
       description: Chuck Norris and Star Wars
       operationId: searchChuckSwapi
       parameters:
-        - name: search_category
+        - name: category
           in: query
           description: Search Chuck Norris Jokes
-          required: true
+          required: false
           schema:
             type: string
-        - name: search_people
+        - name: people
           in: query
           description: Search Star Wars People
-          required: true
+          required: false
           schema:
             type: string
       responses:
@@ -130,15 +130,27 @@ paths:
                 request_id: "d61f9703-6332-468b-84ea-5389c720ff8b"
 
         401:
-          description: Not Found
+          description: Unauthorized
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               example:
                 status_code: 401
-                message: "Error in GET /search"
+                message: "Error in GET /jokes"
                 error: "Unauthorized"
+                request_id: "d61f9703-6332-468b-84ea-5389c720ff8b"
+
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                status_code: 404
+                message: "Error in GET /jokes"
+                error: "Not Found"
                 request_id: "d61f9703-6332-468b-84ea-5389c720ff8b"
 components:
   securitySchemes:

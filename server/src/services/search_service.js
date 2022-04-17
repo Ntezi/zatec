@@ -6,7 +6,7 @@ async function search(searchCategory, searchPeople) {
     const starWarsPeople = await searchStarWarsPeople(searchPeople);
 
     return {
-        chunk: jokes,
+        chuck: jokes,
         swapi: starWarsPeople
     }
 }

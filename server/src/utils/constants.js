@@ -2,9 +2,9 @@ const  JOKES_CATEGORY_API= 'https://api.chucknorris.io/jokes';
 const  SW_PEOPLE_API= 'https://swapi.dev/api/people';
 
 const  REDIS_KEY_JOKES_CATEGORY= 'jokes:category:1';
-const  REDIS_KEY_JOKES_CATEGORY_SEARCH= 'jokes:category:search';
+const  REDIS_KEY_JOKES_CATEGORY_SEARCH= 'jokes:category:jokes';
 const  REDIS_KEY_SW_PEOPLE= 'sw:people:1';
-const  REDIS_KEY_SW_PEOPLE_SEARCH= 'sw:people:search';
+const  REDIS_KEY_SW_PEOPLE_SEARCH= 'sw:people:jokes';
 
 const  REDIS_COMMAND_RPUSH= 'RPUSH';
 const  REDIS_COMMAND_LRANGE= 'LRANGE';

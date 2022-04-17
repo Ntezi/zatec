@@ -7,11 +7,11 @@ const authenticate = require('../middlewares/authorization');
 const {search} = require('../services/search_service');
 
 router.get('/', authenticate, async (req, res) => {
-    const {search_category: searchCategory, search_people: searchPeople} = req.query;
-
+    const {category, people} = req.query;
+    console.log("req.query", req.query)
     try {
         logger.info(`Search Endpoint: GET /search`);
-        const searchResults = await search(searchCategory, searchPeople);
+        const searchResults = await search(category, people);
         returnResponse(res, {data: searchResults}, StatusCodes.OK, ReasonPhrases.OK)
     } catch (error) {
         logger.error(`Error in GET /search: ${error.toString()}`);
