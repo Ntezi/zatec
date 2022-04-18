@@ -4,6 +4,8 @@ import {useCallback, useEffect, useState, useMemo} from "react";
 import {Card, Col, ListGroup, Row, Tab} from "react-bootstrap";
 import {fetchJoke, selectJoke} from "../joke/jokesSlice";
 import Pagination from "../../components/Pagination";
+import TimeAgo from "../../components/TimeAgo";
+import {escape} from "../../helpers/HTMLEscape";
 
 let PageSize = 10;
 
@@ -19,7 +21,7 @@ const JokesCategoryList = () => {
         const firstPageIndex = (currentPage - 1) * PageSize;
         const lastPageIndex = firstPageIndex + PageSize;
         return categories.slice(firstPageIndex, lastPageIndex);
-    }, [currentPage]);
+    }, [currentPage, categories]);
 
     useEffect(() => {
         dispatch(fetchCategories());
@@ -46,7 +48,10 @@ const JokesCategoryList = () => {
             key={index}
             eventKey={`#${category}`}
         >
-            {joke.value}
+            <p>
+                {escape(joke.value)} ~ <TimeAgo timestamp={joke.updated_at} />
+            </p>
+
         </Tab.Pane>
     });
     return (
@@ -56,7 +61,7 @@ const JokesCategoryList = () => {
             </Card.Header>
             <Card.Body>
                 <Card.Text>
-                    <Tab.Container id="list-group-tabs-example" defaultActiveKey="#Animal">
+                    <Tab.Container defaultActiveKey="#Animal">
                         <Row>
                             <Col sm={5}>
                                 <ListGroup>

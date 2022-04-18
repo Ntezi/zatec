@@ -16,11 +16,11 @@ const SwPeopleList = () => {
         const firstPageIndex = (currentPage - 1) * PageSize;
         const lastPageIndex = firstPageIndex + PageSize;
         return people.slice(firstPageIndex, lastPageIndex);
-    }, [currentPage]);
+    }, [currentPage, people]);
 
     useEffect(() => {
         dispatch(fetchPeople());
-    }, [dispatch])
+    }, [dispatch]);
 
     const content = currentPeopleData.map((p, index) => {
         return <ListGroup.Item
@@ -31,36 +31,32 @@ const SwPeopleList = () => {
         >
             <div className="ms-2 me-auto">
                 <div className="fw-bold">{p.name}</div>
-                {/*<a href={p.url} target={"_blank"}>Read More</a>*/}
             </div>
-            <Badge bg="primary" pill>
-                Movies: {p.films.length}
+            <Badge bg="primary" pill> {p.films.length === 1 ? p.films.length + " movie" : p.films.length + " movies"}
             </Badge>
         </ListGroup.Item>
     });
 
     return (
-        <section>
-            <Card>
-                <Card.Header>
-                    <Card.Title>Star Wars People</Card.Title>
-                </Card.Header>
-                <Card.Body>
-                    <Card.Text>
-                        {content}
-                    </Card.Text>
-                </Card.Body>
-                <Card.Footer>
-                    <Pagination
-                        className="pagination-bar"
-                        currentPage={currentPage}
-                        totalCount={people.length}
-                        pageSize={PageSize}
-                        onPageChange={page => setCurrentPage(page)}
-                    />
-                </Card.Footer>
-            </Card>
-        </section>
+        <Card>
+            <Card.Header>
+                <Card.Title>Star Wars People</Card.Title>
+            </Card.Header>
+            <Card.Body>
+                <Card.Text>
+                    {content}
+                </Card.Text>
+            </Card.Body>
+            <Card.Footer>
+                <Pagination
+                    className="pagination-bar"
+                    currentPage={currentPage}
+                    totalCount={people.length}
+                    pageSize={PageSize}
+                    onPageChange={page => setCurrentPage(page)}
+                />
+            </Card.Footer>
+        </Card>
     )
 }
 export default SwPeopleList

@@ -103,16 +103,10 @@ paths:
       description: Chuck Norris and Star Wars
       operationId: searchChuckSwapi
       parameters:
-        - name: category
+        - name: query
           in: query
-          description: Search Chuck Norris Jokes
-          required: false
-          schema:
-            type: string
-        - name: people
-          in: query
-          description: Search Star Wars People
-          required: false
+          description: Search for both Chuck Norris Jokes and Star Wars People
+          required: true
           schema:
             type: string
       responses:

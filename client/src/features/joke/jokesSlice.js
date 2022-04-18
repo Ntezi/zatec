@@ -4,8 +4,7 @@ import {SEARCH_API} from "../../app/constants";
 
 const initialState = [];
 export const fetchJoke = createAsyncThunk('jokes/fetchJoke', async (query) => {
-    console.log("joke", query)
-    const response = await get(`${SEARCH_API}?category=${query}`);
+    const response = await get(`${SEARCH_API}?query=${query}`);
     const jokes = response.data.chuck
     const random = Math.floor(Math.random() * jokes.length);
     return jokes[random];
