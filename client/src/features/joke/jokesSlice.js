@@ -1,3 +1,4 @@
+import React from "react";
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {get} from "../../app/api";
 import {SEARCH_API} from "../../app/constants";

@@ -1,3 +1,4 @@
+import React from "react";
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {get} from "../../app/api";
 import {SEARCH_API} from "../../app/constants";
@@ -11,7 +12,7 @@ export const fetchResults = createAsyncThunk('search/fetchResults', async (query
 
     if (response.data.chuck) {
         response.data.chuck.map(function (joke) {
-            results.push({
+            return results.push({
                 name: joke.value,
                 origin: "Chuck Norris Jokes API"
             })
@@ -20,7 +21,7 @@ export const fetchResults = createAsyncThunk('search/fetchResults', async (query
 
     if (response.data.swapi) {
         response.data.swapi.map(function (people) {
-            results.push({
+            return results.push({
                 name: people.name,
                 origin: "Star Wars People"
             })

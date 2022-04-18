@@ -1,35 +1,38 @@
+import React, {useCallback, useEffect, useState, useMemo} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {selectAllCategories, fetchCategories} from "./jokesCategorySlice";
-import {useCallback, useEffect, useState, useMemo} from "react";
 import {Card, Col, ListGroup, Row, Tab} from "react-bootstrap";
 import {fetchJoke, selectJoke} from "../joke/jokesSlice";
 import Pagination from "../../components/Pagination";
 import TimeAgo from "../../components/TimeAgo";
 import {escape} from "../../helpers/HTMLEscape";
 
-let PageSize = 10;
-
-const JokesCategoryList = () => {
+function JokesCategoryList() {
     const dispatch = useDispatch();
 
     const categories = useSelector(selectAllCategories);
     const joke = useSelector(selectJoke);
 
     const [currentPage, setCurrentPage] = useState(1);
+    const [randomJoke, setRandomJoke] = useState("Animal");
+
+    let PageSize = 20;
 
     const currentJokeCategoriesData = useMemo(() => {
         const firstPageIndex = (currentPage - 1) * PageSize;
         const lastPageIndex = firstPageIndex + PageSize;
         return categories.slice(firstPageIndex, lastPageIndex);
-    }, [currentPage, categories]);
+    }, [currentPage, categories, PageSize]);
 
     useEffect(() => {
         dispatch(fetchCategories());
-    }, [dispatch])
+        console.log('randomJoke', randomJoke);
+        dispatch(fetchJoke(randomJoke));
+    }, [randomJoke, dispatch])
 
-    const onJokeCategoryClicked = useCallback(async (event) => {
-        await dispatch(fetchJoke(event.target.innerText));
-    }, [dispatch])
+    const onJokeCategoryClicked = useCallback((event) => {
+        setRandomJoke(event.target.innerText)
+    }, [setRandomJoke])
 
     const tabContent = currentJokeCategoriesData.map((category, index) => {
         return <ListGroup.Item
@@ -49,7 +52,7 @@ const JokesCategoryList = () => {
             eventKey={`#${category}`}
         >
             <p>
-                {escape(joke.value)} ~ <TimeAgo timestamp={joke.updated_at} />
+                {escape(joke.value)} ~ <TimeAgo timestamp={joke.updated_at}/>
             </p>
 
         </Tab.Pane>
@@ -89,4 +92,5 @@ const JokesCategoryList = () => {
         </Card>
     )
 }
+
 export default JokesCategoryList

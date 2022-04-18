@@ -1,24 +1,25 @@
-import { useSelector, useDispatch } from "react-redux";
-import {useEffect, useMemo, useState, useCallback} from "react";
+import React, {useEffect, useMemo, useState, useCallback} from "react";
+import {useSelector, useDispatch} from "react-redux";
 import {Badge, Card, Form, ListGroup} from "react-bootstrap";
 import Pagination from "../../components/Pagination";
 import {fetchResults, search} from "./searchSlice";
 import {escape} from "../../helpers/HTMLEscape";
 
-let PageSize = 10;
-
-const SearchResultsList = () => {
+function SearchResultsList() {
     const dispatch = useDispatch();
 
     const results = useSelector(search);
+
     const [currentPage, setCurrentPage] = useState(1);
     const [searchQuery, setSearchQuery] = useState(1);
+
+    let PageSize = 5;
 
     const currentResultsData = useMemo(() => {
         const firstPageIndex = (currentPage - 1) * PageSize;
         const lastPageIndex = firstPageIndex + PageSize;
         return results.slice(firstPageIndex, lastPageIndex);
-    }, [currentPage, results]);
+    }, [currentPage, results, PageSize]);
 
     useEffect(() => {
         dispatch(fetchResults(searchQuery));
@@ -51,7 +52,7 @@ const SearchResultsList = () => {
                 <Form>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Control
-                            type="email"
+                            type="text"
                             placeholder="Type keyword to search"
                             onChange={onSearchChange}
                         />
@@ -78,4 +79,5 @@ const SearchResultsList = () => {
         </Card>
     )
 }
+
 export default SearchResultsList

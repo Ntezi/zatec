@@ -1,22 +1,23 @@
-import { useSelector, useDispatch } from "react-redux";
-import {useEffect, useMemo, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
+import {useSelector, useDispatch} from "react-redux";
 import {fetchPeople, selectAllPeople} from "./swPeopleSlice";
 import {Badge, Card, ListGroup} from "react-bootstrap";
 import Pagination from "../../components/Pagination";
 
-let PageSize = 10;
-
-const SwPeopleList = () => {
+function SwPeopleList() {
     const dispatch = useDispatch();
 
     const people = useSelector(selectAllPeople);
+
     const [currentPage, setCurrentPage] = useState(1);
+
+    let PageSize = 15;
 
     const currentPeopleData = useMemo(() => {
         const firstPageIndex = (currentPage - 1) * PageSize;
         const lastPageIndex = firstPageIndex + PageSize;
         return people.slice(firstPageIndex, lastPageIndex);
-    }, [currentPage, people]);
+    }, [currentPage, people, PageSize]);
 
     useEffect(() => {
         dispatch(fetchPeople());
@@ -59,4 +60,5 @@ const SwPeopleList = () => {
         </Card>
     )
 }
+
 export default SwPeopleList

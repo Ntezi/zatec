@@ -1,5 +1,4 @@
 import React from 'react';
-
 import JokesCategoryList from "./features/jokes_category/JokesCategoryList";
 import SwPeopleList from "./features/sw_people/SwPeopleList";
 import {Col, Container, Row} from "react-bootstrap";
